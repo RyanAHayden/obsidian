@@ -34,6 +34,16 @@ fi
 O="$VAULT/.obsidian"
 mkdir -p "$O/plugins"
 
+# keep .obsidian out of Syncthing on this machine: this repo is where desktop settings come from, and phones syncing
+# their own app.json/community-plugins.json kept switching vim mode and plugins off (.stignore itself isn't synced)
+if [ -n "$st" ] && [ -z "${OBSIDIAN_VAULT:-}" ]; then
+	ig="$st/.stignore"
+	if ! grep -qxF "/notes/.obsidian" "$ig" 2>/dev/null; then
+		echo "/notes/.obsidian" >>"$ig"
+		echo "==> obsidian: Syncthing now ignores notes/.obsidian here"
+	fi
+fi
+
 # only write files that change: .obsidian syncs to every device, so rewriting them all would churn Syncthing
 put() { # file new-content
 	[ -f "$1" ] && [ "$(cat "$1")" = "$2" ] && return

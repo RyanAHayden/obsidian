@@ -1,3 +1,4 @@
 # community plugins: id github-repo (installed from the repo's latest release, then Obsidian keeps them updated)
 vimakase jelenv/obsidian-vimakase
 obsidian-git Vinzent03/obsidian-git
+obsidian-importer obsidianmd/obsidian-importer
